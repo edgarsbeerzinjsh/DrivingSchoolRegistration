@@ -2,7 +2,7 @@
 {
     public class Student
     {
-        public string UniqueId { get; } = Guid.NewGuid().ToString();
+        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateOnly YearOfBirth { get; set; }
@@ -15,5 +15,6 @@
         public bool IsTheory { get; set; } = false;
         public bool IsPractical { get; set; } = false;
         public DateTime? ExamTime { get; set; }
+        public string UniqueId { get; set; } = Guid.NewGuid().ToString();
     }
 }
