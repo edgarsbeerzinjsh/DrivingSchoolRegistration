@@ -1,4 +1,6 @@
+using DrivingSchool.Core.Services;
 using DrivingSchool.Data;
+using DrivingSchool.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DrivingSchoolDbContext>(options => 
     options.UseMySQL(builder.Configuration.GetConnectionString("DrivingSchool")));
+builder.Services.AddTransient<IDrivingSchoolDbContext, DrivingSchoolDbContext>();
+builder.Services.AddScoped<IDbService, DbService>();
 
 var app = builder.Build();
 

@@ -12,9 +12,9 @@
         public string Address { get; set; }
         public string City { get; set; }
         public string TrainingCategory { get; set; }
-        public bool IsTheory { get; set; } = false;
-        public bool IsPractical { get; set; } = false;
+        public bool IsTheory { get; set; }
+        public bool IsPractical { get; set; }
         public DateTime? ExamTime { get; set; }
-        public string UniqueId { get; set; } = Guid.NewGuid().ToString();
+        public string UniqueId { get; set; }
     }
 }

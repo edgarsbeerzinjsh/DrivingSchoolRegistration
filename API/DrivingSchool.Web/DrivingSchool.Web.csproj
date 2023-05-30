@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DrivingSchool.Core\DrivingSchool.Core.csproj" />
     <ProjectReference Include="..\DrivingSchool.Data\DrivingSchool.Data.csproj" />
+    <ProjectReference Include="..\DrivingSchool.Services\DrivingSchool.Services.csproj" />
   </ItemGroup>
 
 </Project>
