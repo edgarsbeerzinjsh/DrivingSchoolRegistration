@@ -3,11 +3,11 @@ export type Student = {
     lastName: string;
     yearOfBirth: Date;
     email: string;
-    phone: string;
+    mobilePhone: string;
     address: string;
     city: string;
     trainingCategory: string;
     isTheory: boolean;
     isPractical: boolean;
-    examTime: Date;
+    examTime: Date | null;
 }
