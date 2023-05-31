@@ -1,25 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import { InputField } from './components/InputField';
 import './App.css';
 
 function App() {
+  const [inputForm, setInputForm] = useState('');
+
+  const CustomInputField = (fieldType: string, fieldName: string, fieldValue: string) => {
+    return (
+      <InputField
+        typeOfField={fieldType}
+        name={fieldName}
+        error=''
+        onInputChange={(newValue) => {
+          setInputForm(newValue);
+        }}>
+          {fieldValue}
+        </InputField>
+    );
+  }
+
+  console.log(inputForm);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <form
+      className='AppForm'
+      onSubmit={(e) => {
+        e.preventDefault();
+
+      }}>
+
+      {CustomInputField('text', 'test', 'testy')}
+      {CustomInputField('email', 'test', 'testy2')}
+
+
+
+      {/* /* <label htmlFor='test'>
+        TestTextrr
+        <input type='text' id='test' 
+        />
+        Error
+      </label> */}
+
+      <button type='submit'>Submit</button>
+    </form>
   );
 }
 
