@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { InputField } from './components/InputField';
 import './App.css';
+import { InputTypeOfTraining } from './components/InputTypeOfTraining';
 
 function App() {
   const [isExam, setIsExam] = useState(false);
+  const [isTheory, setIsTheory] = useState(true);
   const [inputForm, setInputForm] = useState({
     firstName: {value: '', error: ''},
     lastName: {value: '', error: ''},
@@ -13,28 +15,18 @@ function App() {
     address: {value: '', error: ''},
     city: {value: '', error: ''},
     trainingCategory: {value: '', error: ''},
-    isTheory: {value: true, error: ''},
-    isPractical: {value: false, error: ''},
     examTime: {value: '', error: ''}
   });
 
   const changeInputForm = (value: string, error: string, key: string) => {
-    return setInputForm((prevInputForm) => {
-      let parsedValue: boolean | string = value;
-      if (key === 'isTheory' || key === 'isPractical')
-      {
-        parsedValue = value === 'true';
-      }
-   
-      return {
-        ...prevInputForm,
+    return setInputForm({
+        ...inputForm,
         [key]: {
-          ...prevInputForm[key as keyof typeof prevInputForm],
-          value: parsedValue,
+          ...inputForm[key as keyof typeof inputForm],
+          value: value,
           error: error,
         },
-      }
-    });
+      });
   };
 
   const customInputField = (fieldType: string, fieldName: string, fieldValue: string) => {
@@ -51,6 +43,7 @@ function App() {
     );
   }
 
+  console.log(isTheory);
   console.log(inputForm);
 
   return (
@@ -69,36 +62,12 @@ function App() {
       {customInputField('text', 'address', 'Adrdress')}
       {customInputField('text', 'city', 'City/ Parish/ Village')}
       {customInputField('text', 'trainingCategory', 'Training category')}
+      <InputTypeOfTraining
+        isTheoryStart={isTheory}
+        onInputChange={(newTheory) => {
+          setIsTheory(newTheory);
+        }}/>
 
-      <label htmlFor='Theory'>
-        Theory
-            <input
-                type='radio'
-                id='Theory'
-                name='typeOfTraining'
-                value='true'
-                checked={inputForm.isTheory.value}
-                onChange={(e) => {
-                  changeInputForm('true', '', 'isTheory');
-                  changeInputForm('false', '', 'isPractical');
-                }}
-            />
-        </label>
-
-      <label htmlFor='Practical'>
-        Practical
-            <input
-                type='radio'
-                id='Practical'
-                name='typeOfTraining'
-                value='false'
-                checked={inputForm.isPractical.value}
-                onChange={(e) => {
-                  changeInputForm('true', '', 'isPractical');
-                  changeInputForm('false', '', 'isTheory');
-                }}
-            />
-      </label>
       <label htmlFor='isExam'>
         Enroll for exam?
             <input
