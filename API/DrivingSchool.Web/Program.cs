@@ -36,15 +36,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
-
-/*
-   "MailSettings": {
-    "Mail": "edgars.berzins@inbox.lv",
-    "DisplayName": "EdgarsTestDrivingSchool",
-    "Password": "EQ16qaDe4V",
-    "Host": "mail.inbox.lv",
-    "Port": 587
-  },
- 
- */
