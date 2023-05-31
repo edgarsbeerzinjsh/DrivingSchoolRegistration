@@ -6,6 +6,7 @@ namespace DrivingSchool.Core.Services
     {
         Student Create(Student student);
         Student GetByUniqueId(string uniqueId);
+        void Update (Student student);
         void Delete(Student student);
         void DeleteAll();
     }

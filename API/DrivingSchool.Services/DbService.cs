@@ -20,6 +20,12 @@ namespace DrivingSchool.Services
             return student;
         }
 
+        public void Update(Student student)
+        {
+            _context.Students.Update(student);
+            _context.SaveChanges();
+        }
+
         public void Delete(Student student)
         {
             _context.Students.Remove(student);

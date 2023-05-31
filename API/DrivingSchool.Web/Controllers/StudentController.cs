@@ -24,7 +24,16 @@ namespace DrivingSchool.Web.Controllers
         {
             _dbService.Create(student);
 
-            return Created("", student);
+            student.EmailSent = _mailService.SendEmail(student);
+
+            _dbService.Update(student);
+
+            if (student.EmailSent)
+            {
+                return Created("", student);
+            }
+
+            return StatusCode(500, "Failed to send email");
         }
 
         [HttpDelete]
@@ -34,27 +43,5 @@ namespace DrivingSchool.Web.Controllers
 
             return Ok("Database deleted");
         }
-
-        [HttpPost]
-        [Route("SendMail")]
-        public bool SendMail(MailData mailData)
-        {
-            return _mailService.SendEmail(mailData);
-        }
-        /*
-        [HttpPost]
-        public async Task<IActionResult> Send([FromForm] MailData request)
-        {
-            try
-            {
-                await _mailService.SendEmailAsync(request);
-                return Ok("Mail sent");
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-        */
     }
 }

@@ -1,9 +1,9 @@
-﻿using DrivingSchool.Web.Model;
+﻿using DrivingSchool.Core.Models;
 
 namespace DrivingSchool.Web.Services
 {
     public interface IMailService
     {
-        bool SendEmail(MailData mailData);
+        bool SendEmail(Student student);
     }
 }

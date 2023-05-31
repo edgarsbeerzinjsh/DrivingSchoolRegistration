@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using MailKit.Net.Smtp;
 using MimeKit;
 using DrivingSchool.Web.Configuration;
+using DrivingSchool.Core.Models;
 
 namespace DrivingSchool.Web.Services
 {
@@ -14,59 +15,47 @@ namespace DrivingSchool.Web.Services
             _mailSettings = mailSettings.Value;
         }
 
-        public bool SendEmail(MailData mailData)
+        public bool SendEmail(Student student)
         {
+            var mailData = StudentMailCreator(student);
+
             try
             {
                 var email = new MimeMessage();
                 {
-                    var emailFrom = new MailboxAddress(_mailSettings.SenderName, _mailSettings.SenderEmail);
-                    email.From.Add(emailFrom);
-
-                    var emailTo = new MailboxAddress(mailData.EmailToName, mailData.EmailToId);
-                    email.To.Add(emailTo);
-
+                    email.From.Add(new MailboxAddress(_mailSettings.SenderName, _mailSettings.SenderEmail));
+                    email.To.Add(new MailboxAddress(mailData.EmailToName, mailData.EmailToId));
                     email.Subject = mailData.EmailSubject;
 
                     var emailBodyBuilder = new BodyBuilder();
                     emailBodyBuilder.TextBody = mailData.EmailBody;
-
                     email.Body = emailBodyBuilder.ToMessageBody();
 
-                    using (SmtpClient mailClient = new SmtpClient())
-                    {
-                        mailClient.ServerCertificateValidationCallback = (s, c, h, e) => true;
-                        mailClient.Connect(_mailSettings.Server, _mailSettings.Port, MailKit.Security.SecureSocketOptions.SslOnConnect);
-                        mailClient.Authenticate(_mailSettings.SenderEmail, _mailSettings.Password);
-                        mailClient.Send(email);
-                        mailClient.Disconnect(true);
-                    }
+                    using SmtpClient mailClient = new();
+                    mailClient.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                    mailClient.Connect(_mailSettings.Server, _mailSettings.Port, MailKit.Security.SecureSocketOptions.SslOnConnect);
+                    mailClient.Authenticate(_mailSettings.SenderEmail, _mailSettings.Password);
+                    mailClient.Send(email);
+                    mailClient.Disconnect(true);
                 }
 
                 return true;
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
                 return false;
             }
-            /*
-            email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
-            email.To.Add(MailboxAddress.Parse(mailRequest.ToEmail));
-            email.Subject = mailRequest.Subject;
+        }
 
-            var builder = new BodyBuilder();
-            builder.HtmlBody = mailRequest.Body;
-            email.Body = builder.ToMessageBody();
-
-            using var smtp = new SmtpClient();
-            //smtp.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
-            smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
-            smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
-
-            await smtp.SendAsync(email);
-            smtp.Disconnect(true);
-            */
+        private static MailData StudentMailCreator(Student student)
+        {
+            return new MailData()
+            {
+                EmailToId = student.Email,
+                EmailToName = $"{student.FirstName} {student.LastName}",
+                EmailSubject = "Application in Driving School",
+                EmailBody = $"Your unique code: {student.UniqueId}"
+            };
         }
     }
 }

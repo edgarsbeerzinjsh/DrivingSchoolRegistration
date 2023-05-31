@@ -6,6 +6,7 @@ namespace DrivingSchool.Data
     public interface IDrivingSchoolDbContext
     {
         DbSet<Student> Students { get; set; }
+        
         int SaveChanges();
     }
 }

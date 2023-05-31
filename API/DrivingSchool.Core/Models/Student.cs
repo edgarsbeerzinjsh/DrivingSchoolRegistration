@@ -16,5 +16,6 @@
         public DateTime? ExamTime { get; set; }
         public DateTime RegistrationDate { get; set; } = DateTime.Today;
         public string UniqueId { get; set; } = Guid.NewGuid().ToString();
+        public bool EmailSent { get; set; } = false;
     }
 }
