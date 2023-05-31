@@ -3,6 +3,7 @@ using System;
 using DrivingSchool.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DrivingSchool.Data.Migrations
 {
     [DbContext(typeof(DrivingSchoolDbContext))]
-    partial class DrivingSchoolDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230531090156_Add_emailSent")]
+    partial class Add_emailSent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
