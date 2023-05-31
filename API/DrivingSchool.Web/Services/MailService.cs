@@ -1,10 +1,8 @@
 ﻿using DrivingSchool.Web.Model;
 using Microsoft.Extensions.Options;
 using MailKit.Net.Smtp;
-using MailKit.Security;
 using MimeKit;
 using DrivingSchool.Web.Configuration;
-using System.Net;
 
 namespace DrivingSchool.Web.Services
 {
@@ -38,7 +36,6 @@ namespace DrivingSchool.Web.Services
                     using (SmtpClient mailClient = new SmtpClient())
                     {
                         mailClient.ServerCertificateValidationCallback = (s, c, h, e) => true;
-                        //ServicePointManager.CheckCertificateRevocationList = false;
                         mailClient.Connect(_mailSettings.Server, _mailSettings.Port, MailKit.Security.SecureSocketOptions.SslOnConnect);
                         mailClient.Authenticate(_mailSettings.SenderEmail, _mailSettings.Password);
                         mailClient.Send(email);
