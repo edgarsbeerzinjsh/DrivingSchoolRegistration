@@ -17,6 +17,7 @@ export const InputField = ({typeOfField, name, children, error, onInputChange}: 
             <input
                 type={typeOfField}
                 id={name}
+                name={name}
                 value={value}
                 onChange={(e) => {
                     setValue(e.target.value);
