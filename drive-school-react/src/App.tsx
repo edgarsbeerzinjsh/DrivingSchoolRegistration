@@ -1,25 +1,27 @@
 import React, { useState } from "react";
 import { InputField } from "./components/InputField";
-import "./App.css";
+import "./App.scss";
 import { InputTypeOfTraining } from "./components/InputTypeOfTraining";
 import axios from "axios";
 import { SERVER_LINKS } from "./constants/serverUrl";
 import { EMPTY_INPUT_FORM } from "./constants/emptyInputForm";
 import { multipleFieldInputBuilder } from "./constants/multipleFieldInputFormBuilder";
 import { studentBuilder } from "./helperFunctions/studentBuilder";
+import { Student } from "./types/student";
+import { inputFieldErrors } from "./helperFunctions/inputFieldErrors";
+import { inputFieldValidation } from "./helperFunctions/inputFieldValidation";
 
 function App() {
 	const [isExam, setIsExam] = useState(false);
 	const [isTheory, setIsTheory] = useState(true);
 	const [inputForm, setInputForm] = useState(EMPTY_INPUT_FORM);
 
-	const changeInputForm = (value: string, error: string, key: string) => {
+	const changeInputForm = (value: string, key: string) => {
 		return setInputForm({
 			...inputForm,
 			[key]: {
 				...inputForm[key as keyof typeof inputForm],
 				value: value,
-				error: error,
 			},
 		});
 	};
@@ -33,43 +35,52 @@ function App() {
 			<InputField
 				typeOfField={fieldType}
 				name={fieldName}
-        value={inputForm[fieldName as keyof typeof inputForm].value}
+				value={inputForm[fieldName as keyof typeof inputForm].value}
 				error={inputForm[fieldName as keyof typeof inputForm].error}
 				onInputChange={(newValue) => {
-					changeInputForm(newValue, "", fieldName);
+					changeInputForm(newValue, fieldName);
 				}}>
 				{fieldValue}
 			</InputField>
 		);
 	};
 
-	const submitStudent = async () => {
+	const submitStudent = async (newStudent: Student) => {
 		try {
-			const { data } = await axios.put(SERVER_LINKS, studentBuilder(inputForm, isTheory));
-      alert("Student added successfully");
-      setInputForm(EMPTY_INPUT_FORM);
-      setIsTheory(true);
-      setIsExam(false);
-      console.log(data);
+			const { data } = await axios.put(SERVER_LINKS, newStudent);
+			alert("Student added successfully");
+			setInputForm(EMPTY_INPUT_FORM);
+			setIsTheory(true);
+			setIsExam(false);
+			console.log(data);
 		} catch (error) {
-      alert("Error adding student");
+			alert("Error adding student");
 			console.log(error);
 		}
 	};
-  
-  console.log(inputForm);
+
+	console.log(inputForm);
 
 	return (
 		<form
+			noValidate
 			className="AppForm"
 			onSubmit={(e) => {
 				e.preventDefault();
-				submitStudent();
-			}}>
+				const student = studentBuilder(inputForm, isExam);
+				let inputErrors = inputFieldValidation(student);
 
-      {multipleFieldInputBuilder.map((i) => (
-        <div key={i.fieldName}>{customInputField(i.fieldType, i.fieldName, i.fieldValue)}</div>
-      ))}
+				if (Object.values(inputErrors).every((i) => i === "")) {
+					submitStudent(student);
+				} else {
+					setInputForm(inputFieldErrors(inputForm, inputErrors));
+				}
+			}}>
+			{multipleFieldInputBuilder.map((i) => (
+				<div key={i.fieldName}>
+					{customInputField(i.fieldType, i.fieldName, i.fieldValue)}
+				</div>
+			))}
 			<InputTypeOfTraining
 				isTheoryStart={isTheory}
 				onInputChange={(newTheory) => {
@@ -85,7 +96,9 @@ function App() {
 					checked={isExam}
 					onChange={() => {
 						setIsExam(!isExam);
-            if (isExam) {changeInputForm("", "", "examTime")};
+						if (isExam) {
+							changeInputForm("", "examTime");
+						}
 					}}
 				/>
 			</label>

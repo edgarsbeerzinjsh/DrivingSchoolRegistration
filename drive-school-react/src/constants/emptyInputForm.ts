@@ -3,7 +3,7 @@ export const EMPTY_INPUT_FORM = {
 	lastName: { value: "", error: "" },
 	yearOfBirth: { value: "", error: "" },
 	email: { value: "", error: "" },
-	phone: { value: "", error: "" },
+	mobilePhone: { value: "", error: "" },
 	address: { value: "", error: "" },
 	city: { value: "", error: "" },
 	trainingCategory: { value: "", error: "" },
