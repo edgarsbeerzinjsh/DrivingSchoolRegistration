@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type InputTypeOfTrainingProps = {
 	isTheoryStart: boolean;
@@ -10,6 +10,10 @@ export const InputTypeOfTraining = ({
 	onInputChange,
 }: InputTypeOfTrainingProps) => {
 	const [isTheory, setIsTheory] = useState(isTheoryStart);
+
+    useEffect(() => {
+        setIsTheory(isTheoryStart);
+    }, [isTheoryStart]);
 
 	return (
 		<div>

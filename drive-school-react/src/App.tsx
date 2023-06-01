@@ -33,6 +33,7 @@ function App() {
 			<InputField
 				typeOfField={fieldType}
 				name={fieldName}
+        value={inputForm[fieldName as keyof typeof inputForm].value}
 				error={inputForm[fieldName as keyof typeof inputForm].error}
 				onInputChange={(newValue) => {
 					changeInputForm(newValue, "", fieldName);
@@ -47,12 +48,16 @@ function App() {
 			const { data } = await axios.put(SERVER_LINKS, studentBuilder(inputForm, isTheory));
       alert("Student added successfully");
       setInputForm(EMPTY_INPUT_FORM);
+      setIsTheory(true);
+      setIsExam(false);
       console.log(data);
 		} catch (error) {
       alert("Error adding student");
 			console.log(error);
 		}
 	};
+  
+  console.log(inputForm);
 
 	return (
 		<form
@@ -63,7 +68,7 @@ function App() {
 			}}>
 
       {multipleFieldInputBuilder.map((i) => (
-        <div key={i.fieldValue}>{customInputField(i.fieldType, i.fieldName, i.fieldValue)}</div>
+        <div key={i.fieldName}>{customInputField(i.fieldType, i.fieldName, i.fieldValue)}</div>
       ))}
 			<InputTypeOfTraining
 				isTheoryStart={isTheory}
@@ -80,6 +85,7 @@ function App() {
 					checked={isExam}
 					onChange={() => {
 						setIsExam(!isExam);
+            if (isExam) {changeInputForm("", "", "examTime")};
 					}}
 				/>
 			</label>

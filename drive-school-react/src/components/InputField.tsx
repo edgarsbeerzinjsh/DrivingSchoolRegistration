@@ -1,15 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type InputFieldProps = {
     typeOfField: string;
     name: string;
     children: React.ReactNode;
+    value: string;
     error: string;
-    onInputChange: (newValue: string) => void;
+    onInputChange: (CurrentValue: string) => void;
 }
 
-export const InputField = ({typeOfField, name, children, error, onInputChange}: InputFieldProps) => {
-    const [value, setValue] = useState("");
+export const InputField = ({typeOfField, name, children, value, error, onInputChange}: InputFieldProps) => {
+    const [newValue, setValue] = useState(value);
+
+    useEffect(() => {
+        setValue(value);
+    }, [value]);
 
     return (
         <label htmlFor={name}>
@@ -18,7 +23,7 @@ export const InputField = ({typeOfField, name, children, error, onInputChange}: 
                 type={typeOfField}
                 id={name}
                 name={name}
-                value={value}
+                value={newValue}
                 onChange={(e) => {
                     setValue(e.target.value);
                     onInputChange(e.target.value);
