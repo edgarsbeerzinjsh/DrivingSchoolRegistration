@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { InputField } from "./components/InputField";
 import "./App.scss";
 import { InputTypeOfTraining } from "./components/InputTypeOfTraining";
@@ -65,20 +65,23 @@ function App() {
 	console.log(inputForm);
 
 	return (
-		<>
+		<div>
+			<h1>Student Registration</h1>
+			{isLoading && <div className="loading-text">Sending data...</div>}
 			<form
 				noValidate
 				className="AppForm"
 				onSubmit={(e) => {
 					e.preventDefault();
+					setIsLoading(true);
 					const student = studentBuilder(inputForm, isExam);
-					let inputErrors = inputFieldValidation(student);
+					let inputErrors = inputFieldValidation(student, isExam);
 
 					if (Object.values(inputErrors).every((i) => i === "")) {
-						setIsLoading(true);
 						submitStudent(student);
 					} else {
 						setInputForm(inputFieldErrors(inputForm, inputErrors));
+						setIsLoading(false);
 					}
 				}}>
 				{multipleFieldInputBuilder.map((i) => (
@@ -88,14 +91,16 @@ function App() {
 				))}
 				<div className="type-of-training-container">
 					Choose type of training:
-				<InputTypeOfTraining
-					isTheoryStart={isTheory}
-					onInputChange={(newTheory) => {
-						setIsTheory(newTheory);
-					}}
-				/>
+					<InputTypeOfTraining
+						isTheoryStart={isTheory}
+						onInputChange={(newTheory) => {
+							setIsTheory(newTheory);
+						}}
+					/>
 				</div>
-				<label htmlFor="isExam" className="checkbox-exam">
+				<label
+					htmlFor="isExam"
+					className="checkbox-exam">
 					Enroll for exam?
 					<input
 						className="exam-checkbox-input"
@@ -117,10 +122,14 @@ function App() {
 						"Date and time of exam"
 					)}
 
-				<button type="submit" className="submit-button">Submit</button>
+				<button
+					type="submit"
+					className="submit-button"
+					disabled={isLoading}>
+					Submit
+				</button>
 			</form>
-			{isLoading && <div>Sending data...</div>}
-		</>
+		</div>
 	);
 }
 

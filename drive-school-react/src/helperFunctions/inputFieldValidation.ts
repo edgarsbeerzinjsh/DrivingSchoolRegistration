@@ -2,7 +2,7 @@ import { EMPTY_FIELD_ERROR } from "./../constants/emptyFieldError";
 import { InputErrors } from "../types/inputErrors";
 import { Student } from "../types/student";
 
-export const inputFieldValidation = (inputData: Student): InputErrors => {
+export const inputFieldValidation = (inputData: Student, exam: boolean): InputErrors => {
     let errors: InputErrors = {...EMPTY_FIELD_ERROR};
 
     const isValidEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(inputData.email);
@@ -48,6 +48,10 @@ export const inputFieldValidation = (inputData: Student): InputErrors => {
 
     if (!isExamDateFuture && (inputData.examTime ?? "")) {
         errors.examTime = "Exam time must be in the future";
+    }
+
+    if (exam && !inputData.examTime) {
+        errors.examTime = "Exam time is required";
     }
 
     return errors;

@@ -1,23 +1,33 @@
+h1 {
+  text-align: center;
+}
+
+.loading-text {
+  text-align: center;
+  padding: 2px auto;
+  font-size: 16px;
+}
+
 form {
   display: flex;
   flex-direction: column;
   background-color: rgb(192, 223, 213);
-  max-width: 600px;
+  max-width: 400px;
   border: 2px solid;
   border-radius: 16px;
-  padding: 8px;
-  margin: 12px auto;
-  row-gap: 16px;
+  padding: 8px 8px;
+  margin: 0 auto;
+  row-gap: 4px;
 
   label {
-    font-size: 24px;
+    font-size: 20px;
   }
 
   input{
     display: flex;
     width: 95%;
-    margin: 4px auto 0 auto;
-    padding: 0.4rem;
+    margin: 0 auto 0 auto;
+    padding: 4px;
     border-radius: 8px;
     border: 1px solid gray;
     font-size: 1rem;
@@ -33,12 +43,12 @@ form {
   .errorText {
     display: inline-block;
     color: red;
-    font-size: 16px;
+    font-size: 12px;
   }
 }
 
 .type-of-training-container {
-  font-size: 24px;
+  font-size: 20px;
 }
 
 .radio-group {
@@ -49,7 +59,7 @@ form {
 }
 
 .radio-label {
-  font-size: 24px;
+  font-size: 18px;
   margin:0 1.5rem;
 }
 
@@ -58,7 +68,7 @@ form {
 }
 
 .exam-checkbox-input {
-  width: 20px;
+  width: 18px;
   margin: 0 0 0 12px;
   padding: 0;
   border: 1px solid gray;
