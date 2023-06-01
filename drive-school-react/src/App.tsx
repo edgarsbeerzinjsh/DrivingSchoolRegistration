@@ -15,6 +15,7 @@ function App() {
 	const [isExam, setIsExam] = useState(false);
 	const [isTheory, setIsTheory] = useState(true);
 	const [inputForm, setInputForm] = useState(EMPTY_INPUT_FORM);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const changeInputForm = (value: string, key: string) => {
 		return setInputForm({
@@ -57,56 +58,69 @@ function App() {
 			alert("Error adding student");
 			console.log(error);
 		}
+
+		setIsLoading(false);
 	};
 
 	console.log(inputForm);
 
 	return (
-		<form
-			noValidate
-			className="AppForm"
-			onSubmit={(e) => {
-				e.preventDefault();
-				const student = studentBuilder(inputForm, isExam);
-				let inputErrors = inputFieldValidation(student);
+		<>
+			<form
+				noValidate
+				className="AppForm"
+				onSubmit={(e) => {
+					e.preventDefault();
+					const student = studentBuilder(inputForm, isExam);
+					let inputErrors = inputFieldValidation(student);
 
-				if (Object.values(inputErrors).every((i) => i === "")) {
-					submitStudent(student);
-				} else {
-					setInputForm(inputFieldErrors(inputForm, inputErrors));
-				}
-			}}>
-			{multipleFieldInputBuilder.map((i) => (
-				<div key={i.fieldName}>
-					{customInputField(i.fieldType, i.fieldName, i.fieldValue)}
-				</div>
-			))}
-			<InputTypeOfTraining
-				isTheoryStart={isTheory}
-				onInputChange={(newTheory) => {
-					setIsTheory(newTheory);
-				}}
-			/>
-
-			<label htmlFor="isExam">
-				Enroll for exam?
-				<input
-					type="checkbox"
-					id="isExam"
-					checked={isExam}
-					onChange={() => {
-						setIsExam(!isExam);
-						if (isExam) {
-							changeInputForm("", "examTime");
-						}
+					if (Object.values(inputErrors).every((i) => i === "")) {
+						setIsLoading(true);
+						submitStudent(student);
+					} else {
+						setInputForm(inputFieldErrors(inputForm, inputErrors));
+					}
+				}}>
+				{multipleFieldInputBuilder.map((i) => (
+					<div key={i.fieldName}>
+						{customInputField(i.fieldType, i.fieldName, i.fieldValue)}
+					</div>
+				))}
+				<div className="type-of-training-container">
+					Choose type of training:
+				<InputTypeOfTraining
+					isTheoryStart={isTheory}
+					onInputChange={(newTheory) => {
+						setIsTheory(newTheory);
 					}}
 				/>
-			</label>
-			{isExam &&
-				customInputField("datetime-local", "examTime", "Date and time of exam")}
+				</div>
+				<label htmlFor="isExam" className="checkbox-exam">
+					Enroll for exam?
+					<input
+						className="exam-checkbox-input"
+						type="checkbox"
+						id="isExam"
+						checked={isExam}
+						onChange={() => {
+							setIsExam(!isExam);
+							if (isExam) {
+								changeInputForm("", "examTime");
+							}
+						}}
+					/>
+				</label>
+				{isExam &&
+					customInputField(
+						"datetime-local",
+						"examTime",
+						"Date and time of exam"
+					)}
 
-			<button type="submit">Submit</button>
-		</form>
+				<button type="submit" className="submit-button">Submit</button>
+			</form>
+			{isLoading && <div>Sending data...</div>}
+		</>
 	);
 }
 

@@ -16,8 +16,8 @@ export const InputTypeOfTraining = ({
     }, [isTheoryStart]);
 
 	return (
-		<div>
-			<label htmlFor='Theory'>
+		<div className="radio-group">
+			<label htmlFor='Theory' className="radio-label">
                 Theory
 				<input
 					type="radio"
@@ -30,7 +30,7 @@ export const InputTypeOfTraining = ({
 					}}
 				/>
 			</label>
-			<label htmlFor='Practical'>
+			<label htmlFor='Practical' className="radio-label">
                 Practical
 				<input
 					type="radio"

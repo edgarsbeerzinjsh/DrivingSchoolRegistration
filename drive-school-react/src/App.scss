@@ -1,42 +1,77 @@
-/* .App {
-  text-align: center;
-}
+form {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(192, 223, 213);
+  max-width: 600px;
+  border: 2px solid;
+  border-radius: 16px;
+  padding: 8px;
+  margin: 12px auto;
+  row-gap: 16px;
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+  label {
+    font-size: 24px;
+  }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+  input{
+    display: flex;
+    width: 95%;
+    margin: 4px auto 0 auto;
+    padding: 0.4rem;
+    border-radius: 8px;
+    border: 1px solid gray;
+    font-size: 1rem;
+    align-items: center;
+    
+    &:focus {
+      outline: none;
+      border-color: rgb(70, 158, 188);
+      box-shadow: 0 0 0 0.2rem rgb(107, 208, 226);
+    }
+  }
+  
+  .errorText {
+    display: inline-block;
+    color: red;
+    font-size: 16px;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.type-of-training-container {
+  font-size: 24px;
+}
+
+.radio-group {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.radio-label {
+  font-size: 24px;
+  margin:0 1.5rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
-.AppForm {
+.checkbox-exam {
   display: flex;
-  flex-direction: column;
+}
+
+.exam-checkbox-input {
+  width: 20px;
+  margin: 0 0 0 12px;
+  padding: 0;
+  border: 1px solid gray;
+}
+
+.submit-button {
+  max-width: fit-content;
+  border: 1px solid gray;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  margin: 0 auto 0 auto;
+  padding: 6px 12px;
+  text-align: center;
+  vertical-align: middle;
 }
