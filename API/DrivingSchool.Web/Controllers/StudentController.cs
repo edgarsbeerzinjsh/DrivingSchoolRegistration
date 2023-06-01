@@ -3,6 +3,7 @@ using DrivingSchool.Core.Services;
 using DrivingSchool.Web.Model;
 using DrivingSchool.Web.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection.Metadata.Ecma335;
 
 namespace DrivingSchool.Web.Controllers
 {
@@ -34,6 +35,19 @@ namespace DrivingSchool.Web.Controllers
             }
 
             return StatusCode(500, "Failed to send email");
+        }
+
+        [HttpGet]
+        [Route("{uniqueCode}")]
+        public IActionResult InfoStudent(string uniqueCode)
+        {
+            var student = _dbService.GetByUniqueId(uniqueCode);
+            if (student == null)
+            {
+                return NotFound(); 
+            }
+
+            return Ok(student);
         }
 
         [HttpDelete]

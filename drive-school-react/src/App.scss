@@ -1,0 +1,87 @@
+h1 {
+  text-align: center;
+}
+
+.loading-text {
+  text-align: center;
+  padding: 2px auto;
+  font-size: 16px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(192, 223, 213);
+  max-width: 400px;
+  border: 2px solid;
+  border-radius: 16px;
+  padding: 8px 8px;
+  margin: 0 auto;
+  row-gap: 4px;
+
+  label {
+    font-size: 20px;
+  }
+
+  input{
+    display: flex;
+    width: 95%;
+    margin: 0 auto 0 auto;
+    padding: 4px;
+    border-radius: 8px;
+    border: 1px solid gray;
+    font-size: 1rem;
+    align-items: center;
+    
+    &:focus {
+      outline: none;
+      border-color: rgb(70, 158, 188);
+      box-shadow: 0 0 0 0.2rem rgb(107, 208, 226);
+    }
+  }
+  
+  .errorText {
+    display: inline-block;
+    color: red;
+    font-size: 12px;
+  }
+}
+
+.type-of-training-container {
+  font-size: 20px;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.radio-label {
+  font-size: 18px;
+  margin:0 1.5rem;
+}
+
+.checkbox-exam {
+  display: flex;
+}
+
+.exam-checkbox-input {
+  width: 18px;
+  margin: 0 0 0 12px;
+  padding: 0;
+  border: 1px solid gray;
+}
+
+.submit-button {
+  max-width: fit-content;
+  border: 1px solid gray;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  margin: 0 auto 0 auto;
+  padding: 6px 12px;
+  text-align: center;
+  vertical-align: middle;
+}
