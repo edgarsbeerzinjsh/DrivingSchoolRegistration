@@ -27,11 +27,11 @@ export const inputFieldValidation = (inputData: Student, exam: boolean): InputEr
     }
 
     if (!isValidEmail) {
-        errors.email = "Email is invalid";
+        errors.email = "Email address is invalid";
     }
 
     if (!isValidPhone) {
-        errors.mobilePhone = "Phone is invalid";
+        errors.mobilePhone = "Phone number is invalid";
     }
 
     if (!inputData.address) {
@@ -46,7 +46,7 @@ export const inputFieldValidation = (inputData: Student, exam: boolean): InputEr
         errors.trainingCategory = "Training category is required";
     }
 
-    if (!isExamDateFuture && (inputData.examTime ?? "")) {
+    if (!isExamDateFuture && ((inputData.examTime ?? "") && exam)) {
         errors.examTime = "Exam time must be in the future";
     }
 
