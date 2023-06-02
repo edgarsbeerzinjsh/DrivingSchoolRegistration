@@ -15,9 +15,10 @@ namespace DrivingSchool.Web.Services
             _mailSettings = mailSettings.Value;
         }
 
-        public bool SendEmail(Student student)
+        public MailResult SendEmail(Student student)
         {
             var mailData = StudentMailCreator(student);
+            var isEmailDelivered = new MailResult();
 
             try
             {
@@ -39,12 +40,15 @@ namespace DrivingSchool.Web.Services
                     mailClient.Disconnect(true);
                 }
 
-                return true;
+                isEmailDelivered.IsMailSent = true;
             }
             catch (Exception ex)
             {
-                return false;
+                isEmailDelivered.IsMailSent = false;
+                isEmailDelivered.ErroMessage = ex.Message;
             }
+            
+            return isEmailDelivered;
         }
 
         private static MailData StudentMailCreator(Student student)

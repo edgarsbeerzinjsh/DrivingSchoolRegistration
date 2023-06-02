@@ -25,7 +25,8 @@ namespace DrivingSchool.Web.Controllers
         {
             _dbService.Create(student);
 
-            student.EmailSent = _mailService.SendEmail(student);
+            var mailResult = _mailService.SendEmail(student);
+            student.EmailSent = mailResult.IsMailSent;
 
             _dbService.Update(student);
 
@@ -34,7 +35,7 @@ namespace DrivingSchool.Web.Controllers
                 return Created("", student);
             }
 
-            return StatusCode(500, "Failed to send email");
+            return Problem(detail: mailResult.ErroMessage);
         }
 
         [HttpGet]

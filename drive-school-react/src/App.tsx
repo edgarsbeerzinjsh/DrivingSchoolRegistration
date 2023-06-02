@@ -2,8 +2,7 @@ import { useState } from "react";
 import { InputField } from "./components/InputField";
 import "./App.scss";
 import { InputTypeOfTraining } from "./components/InputTypeOfTraining";
-import axios from "axios";
-import { SERVER_LINKS } from "./constants/serverUrl";
+import axios, { AxiosError } from "axios";
 import { EMPTY_INPUT_FORM } from "./constants/emptyInputForm";
 import { multipleFieldInputBuilder } from "./constants/multipleFieldInputFormBuilder";
 import { studentBuilder } from "./helperFunctions/studentBuilder";
@@ -48,21 +47,35 @@ function App() {
 
 	const submitStudent = async (newStudent: Student) => {
 		try {
-			const { data } = await axios.put(SERVER_LINKS, newStudent);
+			if (process.env.REACT_APP_API_LINK === undefined) {
+				throw new Error("API link not found");
+			}
+
+			const { data } = await axios.put(
+				process.env.REACT_APP_API_LINK,
+				newStudent
+			);
 			alert("Student added successfully");
 			setInputForm(EMPTY_INPUT_FORM);
 			setIsTheory(true);
 			setIsExam(false);
 			console.log(data);
 		} catch (error) {
-			alert("Error adding student");
-			console.log(error);
+			if (axios.isAxiosError(error)) {
+				const axiosError = error as AxiosError;
+				if (axiosError.response) {
+					const errorDetails = (axiosError.response.data as any)?.detail;
+					alert("Error adding student\n" + errorDetails);
+				}
+			} else {
+				alert("Error adding student");
+			}
+
+			console.log("full", error);
 		}
 
 		setIsLoading(false);
 	};
-
-	console.log(inputForm);
 
 	return (
 		<div>
