@@ -1,9 +1,7 @@
 ﻿using DrivingSchool.Core.Models;
 using DrivingSchool.Core.Services;
-using DrivingSchool.Web.Model;
 using DrivingSchool.Web.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection.Metadata.Ecma335;
 
 namespace DrivingSchool.Web.Controllers
 {

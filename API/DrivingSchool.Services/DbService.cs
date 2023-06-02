@@ -1,4 +1,5 @@
-﻿using DrivingSchool.Core.Models;
+﻿using DrivingSchool.Core.Exceptions;
+using DrivingSchool.Core.Models;
 using DrivingSchool.Core.Services;
 using DrivingSchool.Data;
 
@@ -40,7 +41,14 @@ namespace DrivingSchool.Services
 
         public Student GetByUniqueId(string uniqueId)
         {
-            return _context.Students.SingleOrDefault(s => s.UniqueId == uniqueId);
+            var getStudent = _context.Students.SingleOrDefault(s => s.UniqueId == uniqueId);
+
+            if (getStudent == null)
+            {
+                throw new NoStudentWithThisUniqueCodeException();
+            }
+
+            return getStudent;
         }
     }
 }
