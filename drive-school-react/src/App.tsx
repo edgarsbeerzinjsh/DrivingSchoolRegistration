@@ -64,14 +64,14 @@ function App() {
 			if (axios.isAxiosError(error)) {
 				const axiosError = error as AxiosError;
 				if (axiosError.response) {
-					const errorDetails = (axiosError.response.data as any)?.detail;
-					alert("Error adding student\n" + errorDetails);
+					const errorDetails = axiosError.response.data;
+					console.log(errorDetails);
 				}
 			} else {
-				alert("Error adding student");
+				console.log("full", error);
 			}
 
-			console.log("full", error);
+			alert("Error adding student");
 		}
 
 		setIsLoading(false);
