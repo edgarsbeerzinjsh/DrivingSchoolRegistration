@@ -1,1 +1,0 @@
-export const SERVER_LINKS = "http://localhost:5030/Student";
